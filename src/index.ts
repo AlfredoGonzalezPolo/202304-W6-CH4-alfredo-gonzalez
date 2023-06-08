@@ -19,8 +19,8 @@ if (options.version) {
 
 const add = (a: number, b: number) => a + b;
 const rest = (a: number, b: number) => a - b;
-const division = (a: number, b: number) => a * b;
-const multiplication = (a: number, b: number) => a / b;
+const division = (a: number, b: number) => a / b;
+const multiplication = (a: number, b: number) => a * b;
 
 const server = http.createServer((req, res) => {
   if (!req.url) {
@@ -28,16 +28,28 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  const { pathname } = url.parse(req.url);
+  const pathname = url.parse(req.url);
+  // Const pathnameDivided = req.url.split('');
+  // const queryParams = pathnameDivided.slice(11, 17).join('');
+
+  // const pathname = url.parse(req.url);
+  const queryParams = pathname.query;
+  const queryParamsValues = new URLSearchParams(queryParams!);
+  const number1 = parseFloat(queryParamsValues.get('a')!);
+  const number2 = parseFloat(queryParamsValues.get('b')!);
 
   if (req.method !== 'GET') {
     server.emit('error', new Error('Invalid method'));
     return;
   }
 
-  res.write(`<h1>${pathname}</h1>`);
+  res.write(`<p>${number1} + ${number2} = ${add(number1, number2)}</p>`);
+  res.write(`<p>${number1} - ${number2} = ${rest(number1, number2)}</p>`);
+  res.write(`<p>${number1} * ${number2} = ${division(number1, number2)}</p>`);
+  res.write(
+    `<p>${number1} / ${number2} = ${multiplication(number1, number2)}</p>`
+  );
   res.write(req.method);
-  res.write(req.url);
   res.end();
 });
 
