@@ -29,10 +29,6 @@ const server = http.createServer((req, res) => {
   }
 
   const pathname = url.parse(req.url);
-  // Const pathnameDivided = req.url.split('');
-  // const queryParams = pathnameDivided.slice(11, 17).join('');
-
-  // const pathname = url.parse(req.url);
   const queryParams = pathname.query;
   const queryParamsValues = new URLSearchParams(queryParams!);
   const number1 = parseFloat(queryParamsValues.get('a')!);
