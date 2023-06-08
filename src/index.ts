@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 4444;
+const PORT = process.env.PORT || 14563;
 const version = '1.0.0';
 
 program.option('-v, --version');
@@ -16,6 +16,11 @@ if (options.version) {
   console.log('Version ' + version);
   process.exit(0);
 }
+
+const add = (a: number, b: number) => a + b;
+const rest = (a: number, b: number) => a - b;
+const division = (a: number, b: number) => a * b;
+const multiplication = (a: number, b: number) => a / b;
 
 const server = http.createServer((req, res) => {
   if (!req.url) {
@@ -30,7 +35,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  res.write(`<h1>Hola ${pathname!.toUpperCase()}</h1>`);
+  res.write(`<h1>${pathname}</h1>`);
   res.write(req.method);
   res.write(req.url);
   res.end();
